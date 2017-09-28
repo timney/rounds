@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from '../redux/actions'
 
 import Bars from '../components/Bars';
 import SearchInput from '../components/SearchInput';
@@ -8,23 +11,7 @@ class BarsContainer extends Component {
 
     static propTypes = {
         bars: PropTypes.array,
-        onSelect: PropTypes.func,
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            filter: ''
-        };
-    }
-
-    onSearch(filter) {
-        this.setState({ filter });
-    }
-
-    filterBars(bar) {
-        const { filter } = this.state;
-        return filter.length > 2 ? bar.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1 : bar;
+        barActions: PropTypes.object
     }
 
     render() {
@@ -32,14 +19,25 @@ class BarsContainer extends Component {
             <div>
                 <SearchInput
                     placeholder="Search bars..."
-                    onSearch={f => this.onSearch(f)}
+                    onSearch={f => this.props.barActions.filterBars(f)}
                 />
-                <Bars 
-                    bars={this.props.bars.filter(b => this.filterBars(b))}
-                    onSelect={this.props.onSelect} />
+                <Bars bars={this.props.bars}/>
             </div>
         );
     }
 }
 
-export default BarsContainer;
+const mapStateToProps = state => {
+    return {
+      bars: state.bars,
+    }
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        barActions: bindActionCreators(actions, dispatch)
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(BarsContainer);
