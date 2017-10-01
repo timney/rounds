@@ -2,26 +2,29 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as actions from '../redux/actions'
 
+import * as actions from '../redux/actions'
 import Bars from '../components/Bars';
 import SearchInput from '../components/SearchInput';
 
 class BarsContainer extends Component {
 
     static propTypes = {
-        bars: PropTypes.array,
-        barActions: PropTypes.object
+        bars: PropTypes.object,
+        actions: PropTypes.shape({
+            filterBars: PropTypes.func,
+        })
     }
 
     render() {
+        const { bars, actions } = this.props;
         return (
             <div>
                 <SearchInput
                     placeholder="Search bars..."
-                    onSearch={f => this.props.barActions.filterBars(f)}
+                    onSearch={f => actions.filterBars(f)}
                 />
-                <Bars bars={this.props.bars}/>
+                <Bars bars={bars.list.filter(bar => bars.filter.length > 2 ? bar.name.toLowerCase().indexOf(bars.filter.toLowerCase()) !== -1 : bar)}/>
             </div>
         );
     }
@@ -29,13 +32,13 @@ class BarsContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-      bars: state.bars,
+      bars: state.bar,
     }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        barActions: bindActionCreators(actions, dispatch)
+        actions: bindActionCreators(actions, dispatch)
     }
 }
 

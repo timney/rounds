@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 const Bars = props => (
     <ListGroup>
         {props.bars.map(bar => (
             <ListGroupItem key={bar.id}>
-                <Button color="link" onClick={() => props.onSelect(bar)}>{bar.name}</Button>
+                <Link to={`/${bar.id}`}>{bar.name}</Link>
             </ListGroupItem>
         ))}
     </ListGroup>
