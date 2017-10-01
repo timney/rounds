@@ -9,6 +9,7 @@ import './App.css';
 
 import BarsContainer from './containers/BarsContainer';
 import ProductsContainer from './containers/ProductsContainer';
+import OrderContainer from './containers/OrderContainer';
 
 const Header = () => (
 	<Navbar>
@@ -22,7 +23,9 @@ const App = () => (
 				<Header />
 				<div className="app">
 					<Route path="/" exact component={BarsContainer} />
-					<Route path="/:barId" component={ProductsContainer} />
+					<Route path="/:barId" exact component={ProductsContainer} />
+					<Route path="/order" component={OrderContainer} />
+					<Route path="/:barId/order" exact component={OrderContainer} />
 				</div>
 			</div>
 		</Router>

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { ListGroup, ListGroupItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 const Bars = props => (

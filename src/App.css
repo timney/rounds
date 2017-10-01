@@ -1,3 +1,7 @@
 .app {
   padding: 1rem;
 }
+
+.card > .card-block.card-drink {
+  padding: 1rem;
+}

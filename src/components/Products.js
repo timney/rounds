@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { Card, CardBlock, CardTitle, CardSubtitle, Button } from 'reactstrap';
 
-const Products = props => (
-    <ListGroup>
-        {props.products.map(bar => (
-            <ListGroupItem key={bar.id}>
-                <h5>{bar.name}</h5>
-                <p>{bar.price}</p>]
-            </ListGroupItem>
-        ))}
-    </ListGroup>
-);
+const Products = props => (<div>
+    <h2>{props.bar.name}</h2>
+    {props.products.map(p => (
+        <Card key={p.productId}>
+            <CardBlock className="card-drink">
+                <CardTitle>{p.product.name}</CardTitle>
+                <CardSubtitle>£{p.price}</CardSubtitle>
+                <Button onClick={() => props.onOrder(p.productId)}>
+                    Buy
+                </Button>
+            </CardBlock>
+        </Card>
+    ))}
+</div>);
 
 Products.propTypes = {
-    products: PropTypes.arrayOf(
-        PropTypes.shape({
-            name: PropTypes.string, 
-            id: PropTypes.number,
-            price: PropTypes.number,
-        })
-    ),
+    bar: PropTypes.object,
+    products: PropTypes.array,
+    onOrder: PropTypes.func,
 }
 
 export default Products;

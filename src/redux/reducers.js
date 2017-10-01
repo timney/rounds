@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import * as ActionTypes from './actions';
 import { products, bars, bar_products } from './initialState';
 
-const { FILTER_BARS, SELECTED_BAR } = ActionTypes;
+const { FILTER_BARS, SELECTED_BAR, ORDER_ITEM } = ActionTypes;
 
 
 const barReducer = (state = bars, action) => {
@@ -12,13 +12,11 @@ const barReducer = (state = bars, action) => {
 				...state,
 				filter: action.filter
 			};
-			break;
 		case SELECTED_BAR:
 			return {
 				...state,
 				selected: action.barId,
 			};
-			break;
 		default:
 			return state;
 	}
@@ -32,10 +30,20 @@ const barProductReducer = (state = bar_products, action) => {
 	return state;
 };
 
+const orderReducer = (state = [], action) => {
+	switch(action.type) {
+		case ORDER_ITEM:
+			return [...state, action.productId];
+		default:
+			return state;
+	}
+}
+
 const rootReducer = combineReducers({
 	bar: barReducer,
 	product: productReducer,
-	barProduct: barProductReducer
+	barProduct: barProductReducer,
+	basket: orderReducer
 });
 
 export default rootReducer;
