@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardBlock, CardTitle, CardSubtitle } from 'reactstrap';
+import { Card, CardBlock, CardTitle, CardSubtitle, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 const Order = props => (
     <div>
@@ -15,6 +16,7 @@ const Order = props => (
             </Card>
         ))}
         <h5>Total: £{props.products.map(p => parseFloat(p.price)).reduce((a, v) => a + v).toFixed(2)}</h5>
+        <Button onClick={props.history.goBack}>Continue order</Button>
     </div>
 );
 
